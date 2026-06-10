@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 export const UseVideoPlayer = (videoElement) => {
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     progress: 0,
+    volume: 1,
     isMuted: false,
   });
 
@@ -14,11 +16,34 @@ export const UseVideoPlayer = (videoElement) => {
     });
   };
 
+  const toggleMute = () => {
+    setPlayerState({
+      ...playerState,
+      isMuted: !playerState.isMuted,
+    });
+  };
+
+  const openFullScreen = () => {
+    if (videoElement.current.requestFullscreen) {
+      videoElement.current.requestFullscreen();
+    } else if (videoElement.current.webkitRequestFullscreen) {
+      videoElement.current.webkitRequestFullscreen();
+    } else if (videoElement.current.msRequestFullscreen) {
+      videoElement.current.msRequestFullscreen();
+    }
+  };
+
   useEffect(() => {
     playerState.isPlaying
       ? videoElement.current.play()
       : videoElement.current.pause();
   }, [playerState.isPlaying, videoElement]);
+
+  useEffect(() => {
+    playerState.isMuted
+      ? (videoElement.current.muted = true)
+      : (videoElement.current.muted = false);
+  }, [playerState.isMuted, videoElement]);
 
   const handleOnTimeUpdate = () => {
     const progress =
@@ -39,18 +64,14 @@ export const UseVideoPlayer = (videoElement) => {
     });
   };
 
-  const toggleMute = () => {
+  const handleChangeVolume = (event) => {
+    const manualChange = Number(event.target.value);
+    videoElement.current.volume = manualChange;
     setPlayerState({
       ...playerState,
-      isMuted: !playerState.isMuted,
+      volume: manualChange,
     });
   };
-
-  useEffect(() => {
-    playerState.isMuted
-      ? (videoElement.current.muted = true)
-      : (videoElement.current.muted = false);
-  }, [playerState.isMuted, videoElement]);
 
   return {
     playerState,
@@ -58,5 +79,7 @@ export const UseVideoPlayer = (videoElement) => {
     handleOnTimeUpdate,
     handleVideoProgress,
     toggleMute,
+    handleChangeVolume,
+    openFullScreen,
   };
 };

@@ -6,7 +6,6 @@ export const Login = ({ setAuthUser }) => {
   const [loginUser, setLoginUser] = useState({ email: "" });
   const [existDialog, setExistDialog] = useState(false);
 
-
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -16,7 +15,6 @@ export const Login = ({ setAuthUser }) => {
   };
 
   const existingUserCheck = () => {
-    // If your json-server URL is different, please change it below!
     return fetch(`http://localhost:8088/users?email=${loginUser.email}`)
       .then((res) => res.json())
       .then((user) => (user.length ? user[0] : false));
@@ -27,7 +25,7 @@ export const Login = ({ setAuthUser }) => {
 
     existingUserCheck().then((exists) => {
       if (exists) {
-        sessionStorage.setItem("rm_user", exists.id);
+        setAuthUser(exists.id);
         navigate("/");
       } else {
         setExistDialog(true);
@@ -36,41 +34,50 @@ export const Login = ({ setAuthUser }) => {
   };
 
   return (
-    <main className="container--login">
-      <dialog className="dialog dialog--auth" open={existDialog}>
-        <div>User does not exist</div>
-        <button
-          className="button--close"
-          onClick={(e) => setExistDialog(false)}
-        >
-          Close
-        </button>
-      </dialog>
-      <section>
-        <form className="form--login" onSubmit={handleLogin}>
-          <h1>Nutshell</h1>
-          <h2>Please sign in</h2>
-          <fieldset>
-            <label htmlFor="inputEmail"> Email address </label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="Email address"
-              required
-              autoFocus
-              value={loginUser.email}
-              onChange={handleInputChange}
-            />
-          </fieldset>
-          <fieldset>
-            <button type="submit">Sign in</button>
-          </fieldset>
-        </form>
-      </section>
-      <section className="link--register">
-        <Link to="/register">Register for an account</Link>
-      </section>
+    <main className="auth_body">
+      <main className="container container--auth container--login">
+        <div>
+          <dialog className="dialog dialog--auth" open={existDialog}>
+            <div>User does not exist</div>
+            <button
+              className="button--close button_auth"
+              onClick={(e) => setExistDialog(false)}
+            >
+              Close
+            </button>
+          </dialog>
+          <section>
+            <form className="form--login" onSubmit={handleLogin}>
+              <h1>Remote Watch</h1>
+              <h2>Please sign in</h2>
+              <fieldset className="fieldset_auth">
+                <input
+                  type="email"
+                  id="email"
+                  className="form-control input_auth"
+                  placeholder="Email address"
+                  required
+                  autoFocus
+                  value={loginUser.email}
+                  onChange={handleInputChange}
+                />
+              </fieldset>
+              <fieldset className="fieldset_auth">
+                <button type="submit" className="button_auth">
+                  Sign in
+                </button>
+              </fieldset>
+              <fieldset className="link--register fieldset_auth">
+                <Link to="/register">
+                  <button className="button_auth">
+                    Register for an account
+                  </button>
+                </Link>
+              </fieldset>
+            </form>
+          </section>
+        </div>
+      </main>
     </main>
   );
 };

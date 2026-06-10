@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Player } from "./components/player/Player";
 import { ApplicationViews } from "./components/ApplicationViews";
-import { NavBar } from "./components/nav/NavBar";
 import "./RemoteWatch.css";
 
 export const RemoteWatch = () => {
@@ -19,13 +17,19 @@ export const RemoteWatch = () => {
     setIsAuthenticated(sessionStorage.getItem("rm_user") !== null);
   };
 
+  const getLoggedInUser = () => {
+    const thisUserId = parseInt(sessionStorage.getItem("rm_user"));
+    return thisUserId;
+  };
+
   return (
     <>
-      <NavBar clearUser={clearUser} isAuthenticated={isAuthenticated} />
       <ApplicationViews
         setAuthUser={setAuthUser}
+        clearUser={clearUser}
         isAuthenticated={isAuthenticated}
         setIsAuthenticated={setIsAuthenticated}
+        getLoggedInUser={getLoggedInUser}
       />
     </>
   );
