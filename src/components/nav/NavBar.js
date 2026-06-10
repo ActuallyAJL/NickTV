@@ -5,8 +5,8 @@ import "./NavBar.css";
 
 export const NavBar = ({ clearUser }) => {
   return (
-    <nav className="navbar bg-dark text-white flex-md-nowrap p-0 shadow">
-      <ul className="nav nav-pills nav-fill">
+    <nav className="navbar">
+      <ul className="nav-pills">
         <li className="nav-item">
           <Link className="nav-link" to="/">
             All

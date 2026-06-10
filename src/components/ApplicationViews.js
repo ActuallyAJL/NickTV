@@ -9,9 +9,9 @@ import { Player } from "./player/Player";
 
 export const ApplicationViews = ({
   isAuthenticated,
-  clearUser,
   setAuthUser,
   getLoggedInUser,
+  clearUser,
 }) => {
   const PrivateOutlet = () => {
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
@@ -23,16 +23,31 @@ export const ApplicationViews = ({
         <Route path="/" element={<PrivateOutlet />}>
           <Route
             path="/"
-            element={<MovieList getLoggedInUser={getLoggedInUser} clearUser={clearUser}/>}
+            element={
+              <MovieList
+                getLoggedInUser={getLoggedInUser}
+                clearUser={clearUser}
+              />
+            }
           ></Route>
           <Route
             path="/:movieId/details"
-            element={<MovieDetails getLoggedInUser={getLoggedInUser} clearUser={clearUser}/>}
+            element={
+              <MovieDetails
+                getLoggedInUser={getLoggedInUser}
+                clearUser={clearUser}
+              />
+            }
           ></Route>
           <Route path="/:movieId/play" element={<Player />}></Route>
           <Route
             path="/genre/:genreId"
-            element={<GenreMovieList getLoggedInUser={getLoggedInUser} clearUser={clearUser}/>}
+            element={
+              <GenreMovieList
+                getLoggedInUser={getLoggedInUser}
+                clearUser={clearUser}
+              />
+            }
           ></Route>
         </Route>
 
