@@ -1,5 +1,5 @@
 import XMLParser from "react-xml-parser";
-import { url , key , movieLibId } from "../Settings";
+import { url, key, movieLibId } from "../Settings";
 
 export const getAllMovies = () => {
   return fetch(`${url}/library/sections/${movieLibId}/all?X-Plex-Token=${key}`)
@@ -15,7 +15,6 @@ export const getMovieById = (movieId) => {
     .then((res) => res.text())
     .then((res) => {
       const xml = new XMLParser().parseFromString(res);
-      console.log(xml)
       return xml;
     });
 };
