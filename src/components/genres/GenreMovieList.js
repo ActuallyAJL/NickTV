@@ -3,7 +3,6 @@ import { MovieCard } from "../movies/MovieCard";
 import { getMoviesByGenreId } from "../modules/GenreManager";
 import { NavBar } from "../nav/NavBar";
 import "../movies/MovieList.css";
-import { NavBar } from "../nav/NavBar";
 import "../nav/NavBar.css";
 import { useParams } from "react-router-dom";
 

@@ -9,10 +9,9 @@ import {
 } from "../modules/FavoriteManager";
 import { ReviewList } from "../reviews/ReviewList";
 import "./MovieList.css";
-import { NavBar } from "../nav/NavBar";
 import "../nav/NavBar.css";
 
-export const MovieDetails = ({ getLoggedInUser , clearUser }) => {
+export const MovieDetails = ({ getLoggedInUser, clearUser }) => {
   const [movie, setMovie] = useState({});
   const { movieId } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
@@ -62,13 +61,15 @@ export const MovieDetails = ({ getLoggedInUser , clearUser }) => {
   };
 
   const asciiParser = (text) => {
-    let ascii = "&#39;";
-    let newText = text?.replaceAll(ascii, "'");
-    return newText;
+    let ascii = ["&#39;", "&#34;", "&amp;"];
+    text = text?.replaceAll(ascii[0], "'");
+    text = text?.replaceAll(ascii[1], '"');
+    text = text?.replaceAll(ascii[2], "&");
+    return text;
   };
 
   return (
-    <>
+    <div className="site">
       <NavBar clearUser={clearUser} />
       <div className="movie_detail_card">
         <div className="movie_detail_header">
@@ -81,8 +82,8 @@ export const MovieDetails = ({ getLoggedInUser , clearUser }) => {
             }
           </div>
           <div className="movie_detail_info">
-            <h1>{movie.attributes?.title}</h1>
-            <h2>({movie.attributes?.year})</h2>
+            <h1>{asciiParser(movie.attributes?.title)}</h1>
+            <h2>{movie.attributes?.year}</h2>
             <h4>{asciiParser(movie.attributes?.summary)}</h4>
             <div className="actions">
               {isFavorite ? (
@@ -121,6 +122,6 @@ export const MovieDetails = ({ getLoggedInUser , clearUser }) => {
         </div>
         <ReviewList movieId={movieId} getLoggedInUser={getLoggedInUser} />
       </div>
-    </>
+    </div>
   );
 };

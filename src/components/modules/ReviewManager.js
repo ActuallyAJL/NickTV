@@ -1,7 +1,7 @@
 import { dbURL } from "../Settings";
 
 export const getReviewsByMovieId = (movieId) => {
-  return fetch(`${dbURL}/reviews?movieId=${movieId}`)
+  return fetch(`${dbURL}/reviews?movieId=${movieId}&_expand=user`)
   .then((res) => res.json()
   );
 };

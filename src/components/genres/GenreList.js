@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GenreCard } from "./GenreCard";
 import { getAllGenres } from "../modules/GenreManager";
-import "./GenreList.css";
 
 export const GenreList = ({ getLoggedInUser }) => {
   const [genres, setGenres] = useState([]);

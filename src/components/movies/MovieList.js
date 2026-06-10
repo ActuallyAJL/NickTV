@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { MovieCard } from "./MovieCard";
 import { getAllMovies } from "../modules/MovieManager";
 import { NavBar } from "../nav/NavBar";
+import '../nav/NavBar.css'
 import "./MovieList.css";
-import { NavBar } from "../nav/NavBar";
-import "../nav/NavBar.css";
 
 export const MovieList = ({ getLoggedInUser , clearUser }) => {
   const [movies, setMovies] = useState([]);
