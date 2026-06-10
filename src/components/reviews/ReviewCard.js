@@ -107,6 +107,7 @@ export const ReviewCard = ({ review, getLoggedInUser }) => {
     <>
       <h1>{thisReview.title}</h1>
       <h3>{thisReview.body}</h3>
+      <h3>- {thisReview.user?.name}</h3>
       <h3>{thisReview.rating} Stars</h3>
       {thisReview.userId === currentUser ? (
         <>
@@ -130,6 +131,7 @@ export const ReviewCard = ({ review, getLoggedInUser }) => {
 
   return (
     <div className="review_card">
+      {console.log(review)}
       {isChangingReview ? editReviewCodeArray[0] : editReviewCodeArray[1]}
     </div>
   );
