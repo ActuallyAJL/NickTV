@@ -1,77 +1,17 @@
 {
+  "comment": [
+    {
+      "comment": "change the name of this file to database.json and serve it using json-server. preferably using port 8088."
+    }
+  ],
   "users": [
     {
       "id": 1,
       "name": "Administrator",
       "email": "admin@rm.com",
       "isAdmin": true
-    },
-    {
-      "email": "al@al.com",
-      "name": "Alex Levy",
-      "id": 2,
-      "isAdmin": false
-    },
-    {
-      "email": "bb@bb.com",
-      "name": "Bory Blark",
-      "idAdmin": false,
-      "id": 3
-    },
-    {
-      "email": "rg@rg.com",
-      "name": "Ross Geller",
-      "idAdmin": false,
-      "id": 4
-    },
-    {
-      "email": "dc@dc.com",
-      "name": "Derrick Cravens",
-      "idAdmin": false,
-      "id": 5
     }
   ],
-  "favorites": [
-    {
-      "id": 1,
-      "userId": 2,
-      "movieId": 22670
-    },
-    {
-      "id": 2,
-      "userId": 2,
-      "movieId": 4822
-    },
-    {
-      "id": 3,
-      "userId": 3,
-      "movieId": 700
-    }
-  ],
-  "reviews": [
-    {
-      "id": 1,
-      "userId": 2,
-      "movieId": 22670,
-      "title": "Loved emo Batman",
-      "body": "This portrayal of Batman was so good. Very realistic",
-      "rating": 5
-    },
-    {
-      "id": 2,
-      "userId": 2,
-      "movieId": 4822,
-      "title": "Hey Paul!",
-      "body": "YAAAAA!",
-      "rating": 4
-    },
-    {
-      "id": 3,
-      "userId": 3,
-      "movieId": 700,
-      "title": "Worst Movie ever",
-      "body": "There were no beautiful sisters at all. And very little flesh",
-      "rating": 1
-    }
-  ]
+  "favorites": [],
+  "reviews": []
 }
