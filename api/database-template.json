@@ -1,13 +1,17 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "name": "Administrator",
-        "email": "admin@rm.com",
-        "isAdmin": true
-      }
-    ],
-    "favorites": [],
-    "reviews": []
-  }
-  
+  "comment": [
+    {
+      "comment": "change the name of this file to database.json and serve it using json-server. preferably using port 8088."
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Administrator",
+      "email": "admin@rm.com",
+      "isAdmin": true
+    }
+  ],
+  "favorites": [],
+  "reviews": []
+}

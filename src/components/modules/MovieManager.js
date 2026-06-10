@@ -1,13 +1,5 @@
-import React from "react";
 import XMLParser from "react-xml-parser";
-import { localKey, remoteKey } from "../Settings";
-
-const dbURL = "http://localhost:8088";
-const localPlex = "http://localhost:32400";
-const remotePlex = "http://75.46.245.204:10913";
-const url = remotePlex;
-const key = remoteKey;
-const movieLibId = 1;
+import { url, key, movieLibId } from "../Settings";
 
 export const getAllMovies = () => {
   return fetch(`${url}/library/sections/${movieLibId}/all?X-Plex-Token=${key}`)
