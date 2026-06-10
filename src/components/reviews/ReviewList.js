@@ -8,9 +8,11 @@ export const ReviewList = ({ movieId, getLoggedInUser }) => {
   const [newReview, setNewReview] = useState({
     title: "",
     body: "",
-    rating: 0,
+    rating: 5,
     movieId: parseInt(movieId),
   });
+
+  const currentUser = getLoggedInUser();
 
   const getReviews = (movieId) => {
     getReviewsByMovieId(movieId).then((someReviews) => setReviews(someReviews));
@@ -24,7 +26,7 @@ export const ReviewList = ({ movieId, getLoggedInUser }) => {
   const handleFieldChange = (event) => {
     const tempReview = { ...newReview };
 
-    tempReview.userId = getLoggedInUser();
+    tempReview.userId = currentUser;
 
     let selectedTarget = event.target.value;
 
@@ -77,11 +79,13 @@ export const ReviewList = ({ movieId, getLoggedInUser }) => {
           Rating
         </label>
         <input
-          type="text"
+          type="number"
           id="rating"
           onChange={handleFieldChange}
           required
           autoFocus
+          min='1'
+          max='5'
           className="new_review_controlled_form"
           placeholder="Rating"
           value={newReview.rating}
@@ -120,7 +124,7 @@ export const ReviewList = ({ movieId, getLoggedInUser }) => {
         <h1>User Reviews</h1>
         {isWritingReview ? newReviewCodeArray[0] : newReviewCodeArray[1]}
         {reviews.map((review) => {
-          return <ReviewCard key={review.id} review={review} />;
+          return <ReviewCard key={review.id} review={review} getLoggedInUser={getLoggedInUser}/>;
         })}
       </div>
     </>
