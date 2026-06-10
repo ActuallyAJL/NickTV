@@ -8,7 +8,7 @@ export const ReviewList = ({ movieId, getLoggedInUser }) => {
   const [newReview, setNewReview] = useState({
     title: "",
     body: "",
-    rating: 0,
+    rating: 5,
     movieId: parseInt(movieId),
   });
 
@@ -79,11 +79,13 @@ export const ReviewList = ({ movieId, getLoggedInUser }) => {
           Rating
         </label>
         <input
-          type="text"
+          type="number"
           id="rating"
           onChange={handleFieldChange}
           required
           autoFocus
+          min='1'
+          max='5'
           className="new_review_controlled_form"
           placeholder="Rating"
           value={newReview.rating}

@@ -75,11 +75,13 @@ export const ReviewCard = ({ review, getLoggedInUser }) => {
           Rating
         </label>
         <input
-          type="text"
+          type="number"
           id="rating"
           onChange={handleFieldChange}
           required
           autoFocus
+          min='1'
+          max='5'
           className="edit_review_controlled_form"
           placeholder="Rating"
           value={thisReview.rating}
@@ -105,6 +107,7 @@ export const ReviewCard = ({ review, getLoggedInUser }) => {
     <>
       <h1>{thisReview.title}</h1>
       <h3>{thisReview.body}</h3>
+      <h3>- {thisReview.user?.name}</h3>
       <h3>{thisReview.rating} Stars</h3>
       {thisReview.userId === currentUser ? (
         <>
@@ -128,6 +131,7 @@ export const ReviewCard = ({ review, getLoggedInUser }) => {
 
   return (
     <div className="review_card">
+      {console.log(review)}
       {isChangingReview ? editReviewCodeArray[0] : editReviewCodeArray[1]}
     </div>
   );
