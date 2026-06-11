@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { dbURL } from "../Settings";
 import "./Login.css";
 
 export const Login = ({ setAuthUser }) => {
@@ -15,7 +16,7 @@ export const Login = ({ setAuthUser }) => {
   };
 
   const existingUserCheck = () => {
-    return fetch(`http://localhost:8088/users?email=${loginUser.email}`)
+    return fetch(`${dbURL}/users?email=${loginUser.email}`)
       .then((res) => res.json())
       .then((user) => (user.length ? user[0] : false));
   };
@@ -48,8 +49,8 @@ export const Login = ({ setAuthUser }) => {
           </dialog>
           <section>
             <form className="form--login" onSubmit={handleLogin}>
-              <h1>Remote Watch</h1>
-              <h2>Please sign in</h2>
+              <h1>NickTV</h1>
+              <h2>Coming Soon...</h2>
               <fieldset className="fieldset_auth">
                 <input
                   type="email"
@@ -60,16 +61,17 @@ export const Login = ({ setAuthUser }) => {
                   autoFocus
                   value={loginUser.email}
                   onChange={handleInputChange}
+                  disabled={true}
                 />
               </fieldset>
               <fieldset className="fieldset_auth">
-                <button type="submit" className="button_auth">
+                <button type="submit" className="button_auth" disabled={true}>
                   Sign in
                 </button>
               </fieldset>
               <fieldset className="link--register fieldset_auth">
                 <Link to="/register">
-                  <button className="button_auth">
+                  <button className="button_auth" disabled={true}>
                     Register for an account
                   </button>
                 </Link>
