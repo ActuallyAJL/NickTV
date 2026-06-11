@@ -24,6 +24,8 @@ yarn-error.log*
 
 *.mp4
 
+# json-server data (dev-only; real data lives in Azure Table Storage)
 database.json
 
-settings.js
+# Local secrets for `npm start` (Plex token etc.). Settings.js is now committed and
+# secret-free — it reads these from the environment. .env.local is already ignored above.
