@@ -1,0 +1,8 @@
+# Azure Functions
+bin
+obj
+node_modules
+local.settings.json
+
+# json-server data (dev-only); real data lives in Azure Table Storage
+database.json

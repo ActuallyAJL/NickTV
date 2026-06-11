@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { dbURL } from "../Settings";
 import "./Login.css";
 
 export const Register = ({ setAuthUser }) => {
@@ -19,7 +20,7 @@ export const Register = ({ setAuthUser }) => {
   };
 
   const existingUserCheck = () => {
-    return fetch(`http://localhost:8088/users?email=${registerUser.email}`)
+    return fetch(`${dbURL}/users?email=${registerUser.email}`)
       .then((res) => res.json())
       .then((user) => !!user.length);
   };
@@ -29,7 +30,7 @@ export const Register = ({ setAuthUser }) => {
 
     existingUserCheck().then((userExists) => {
       if (!userExists) {
-        fetch("http://localhost:8088/users", {
+        fetch(`${dbURL}/users`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -67,7 +68,7 @@ export const Register = ({ setAuthUser }) => {
         </dialog>
 
         <form className="form--login" onSubmit={handleRegister}>
-          <h1>Remote Watch</h1>
+          <h1>NickTV</h1>
           <h2 className="h3 mb-3 font-weight-normal">
             Please Register for Application Name
           </h2>
