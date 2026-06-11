@@ -6,13 +6,67 @@ Remote-Watch provides an alternative web-based interface for viewing movies that
 
 ## Installation
 
-Fork or clone this project down and place the contents wherever. You will need to take the two files "Settings-template.js" and "database-template.json". Change the names of these files to "Settings.js" and "database.json", respectively. Do not move the files. In your new "Settings.js" file, fill in all the empty strings with data relelvant to your personal Plex server. This includes the Plex Key (known as X-Plex-Token), port numbers and static IP address for your Plex Server, and your Movie Library ID. Finally, in Terminal, navigate to the root directory of remote watch and run `npm install`.
+Fork or clone this project, then from the root directory run `npm install`.
+
+Configuration is via environment variables (no secrets are committed). Copy
+`.env.local.example` to `.env.local` (which is gitignored) and fill in your Plex details —
+the server URL (IP/port), the Plex Key (X-Plex-Token), and your Movie Library ID. Set up
+the local data store too: copy `api/database-template.json` to `api/database.json`.
 
 ## Usage
 
-After all installation steps are complete, navigate to the root directory of the project and run `npm start`. In a second terminal tab, navigate to the 'API' subdirectory and run `json-server -p 8088 -w database.json`. You will need to have json-server installed in terminal. If you choose to use a different port number, you will have to input the port number into your 'Settings.js' file. 
+With `.env.local` and `api/database.json` in place, you need two terminals from the project
+root:
 
-Happy Viewing
+- **Terminal 1:** `npm start` — the React app (http://localhost:3000).
+- **Terminal 2:** `npm run server` — the json-server data API (users/reviews/favorites) on
+  port 8088. (`json-server` is bundled as a dev dependency, so no separate install is
+  needed.)
+
+Log in with `admin@rm.com`. Happy Viewing
+
+## Deploying to Azure (Static Web App)
+
+Remote-Watch can be hosted as an **Azure Static Web App**: the React UI is served as static
+files, and the users/favorites/reviews API ships as a bundled **Azure Functions** app
+(`api/`) backed by **Azure Table Storage** — this replaces the dev-only `json-server`. The
+GitHub Actions workflow in `.github/workflows/` already builds and deploys both.
+
+### 1. Provision Azure resources
+
+1. **Storage account** (for Table Storage) — create one, then copy its **connection
+   string** (Access keys blade).
+2. **Static Web App** — create one pointed at this GitHub repo, branch `main`, with build
+   settings: app location `/`, api location `api`, output location `build`. Azure adds the
+   deployment-token secret to the repo automatically.
+3. In the Static Web App → **Configuration** (application settings), add
+   `TABLES_CONNECTION_STRING` = the storage connection string from step 1.
+4. **Seed the admin user** once: from `api/`,
+   `TABLES_CONNECTION_STRING="<conn string>" npm run seed`.
+
+### 2. Make Plex reachable (required, or no movies will load)
+
+The browser streams **directly** from your Plex server, so a deployed HTTPS app needs:
+
+- **Plex Remote Access enabled** so the server is reachable from the internet
+  (Plex → Settings → Remote Access).
+- An **HTTPS** Plex URL. A plain `http://<ip>:<port>` URL is blocked by the browser as
+  *mixed content* on an HTTPS site. Use your server's secure `*.plex.direct` address (Plex
+  issues these certs) — e.g. `https://<dash-encoded-ip>.<hash>.plex.direct:32400`.
+- Plex **CORS** permitting your Static Web App origin.
+
+Provide the HTTPS Plex URL, token, and library ID to the **production build** as
+environment variables (the app reads `REACT_APP_PLEX_URL`, `REACT_APP_PLEX_TOKEN`,
+`REACT_APP_MOVIE_LIB_ID`). Add them as **GitHub repo secrets** and pass them to the build
+step via an `env:` block in the workflow. **Note:** REACT_APP_* values end up in the public
+client bundle, so only deploy a collection/token you're comfortable exposing. Until these
+are set the site still builds and deploys — movies just stay blank.
+
+### 3. Deploy
+
+Push to `main`. The workflow builds the app + API and deploys. `dbURL` automatically points
+at `/api` in the production build (see `src/components/Settings.js`), so no code change is
+needed between local and cloud.
 
 ## Help
 
