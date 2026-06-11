@@ -6,13 +6,24 @@ Remote-Watch provides an alternative web-based interface for viewing movies that
 
 ## Installation
 
-Fork or clone this project down and place the contents wherever. You will need to take the two files "Settings-template.js" and "database-template.json". Change the names of these files to "Settings.js" and "database.json", respectively. Do not move the files. In your new "Settings.js" file, fill in all the empty strings with data relelvant to your personal Plex server. This includes the Plex Key (known as X-Plex-Token), port numbers and static IP address for your Plex Server, and your Movie Library ID. Finally, in Terminal, navigate to the root directory of remote watch and run `npm install`.
+Fork or clone this project, then from the root directory run `npm install`.
+
+Configuration is via environment variables (no secrets are committed). Copy
+`.env.local.example` to `.env.local` (which is gitignored) and fill in your Plex details —
+the server URL (IP/port), the Plex Key (X-Plex-Token), and your Movie Library ID. Set up
+the local data store too: copy `api/database-template.json` to `api/database.json`.
 
 ## Usage
 
-After all installation steps are complete, navigate to the root directory of the project and run `npm start`. In a second terminal tab, navigate to the 'API' subdirectory and run `json-server -p 8088 -w database.json`. You will need to have json-server installed in terminal. If you choose to use a different port number, you will have to input the port number into your 'Settings.js' file. 
+With `.env.local` and `api/database.json` in place, you need two terminals from the project
+root:
 
-Happy Viewing
+- **Terminal 1:** `npm start` — the React app (http://localhost:3000).
+- **Terminal 2:** `npm run server` — the json-server data API (users/reviews/favorites) on
+  port 8088. (`json-server` is bundled as a dev dependency, so no separate install is
+  needed.)
+
+Log in with `admin@rm.com`. Happy Viewing
 
 ## Deploying to Azure (Static Web App)
 
@@ -44,15 +55,18 @@ The browser streams **directly** from your Plex server, so a deployed HTTPS app 
   issues these certs) — e.g. `https://<dash-encoded-ip>.<hash>.plex.direct:32400`.
 - Plex **CORS** permitting your Static Web App origin.
 
-Put the HTTPS Plex URL, token, and library ID in `Settings.js` (it is bundled into the
-build). **Note:** the X-Plex-Token ends up in the public client bundle, so only deploy a
-collection/token you're comfortable exposing.
+Provide the HTTPS Plex URL, token, and library ID to the **production build** as
+environment variables (the app reads `REACT_APP_PLEX_URL`, `REACT_APP_PLEX_TOKEN`,
+`REACT_APP_MOVIE_LIB_ID`). Add them as **GitHub repo secrets** and pass them to the build
+step via an `env:` block in the workflow. **Note:** REACT_APP_* values end up in the public
+client bundle, so only deploy a collection/token you're comfortable exposing. Until these
+are set the site still builds and deploys — movies just stay blank.
 
 ### 3. Deploy
 
 Push to `main`. The workflow builds the app + API and deploys. `dbURL` automatically points
-at `/api` in the production build (see `Settings-template.js`), so no code change is needed
-between local and cloud.
+at `/api` in the production build (see `src/components/Settings.js`), so no code change is
+needed between local and cloud.
 
 ## Help
 
