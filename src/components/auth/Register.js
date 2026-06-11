@@ -68,7 +68,7 @@ export const Register = ({ setAuthUser }) => {
         </dialog>
 
         <form className="form--login" onSubmit={handleRegister}>
-          <h1>Remote Watch</h1>
+          <h1>NickTV</h1>
           <h2 className="h3 mb-3 font-weight-normal">
             Please Register for Application Name
           </h2>

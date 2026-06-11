@@ -49,7 +49,7 @@ export const Login = ({ setAuthUser }) => {
           </dialog>
           <section>
             <form className="form--login" onSubmit={handleLogin}>
-              <h1>Remote Watch</h1>
+              <h1>NickTV</h1>
               <h2>Please sign in</h2>
               <fieldset className="fieldset_auth">
                 <input
