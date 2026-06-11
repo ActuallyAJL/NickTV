@@ -14,6 +14,46 @@ After all installation steps are complete, navigate to the root directory of the
 
 Happy Viewing
 
+## Deploying to Azure (Static Web App)
+
+Remote-Watch can be hosted as an **Azure Static Web App**: the React UI is served as static
+files, and the users/favorites/reviews API ships as a bundled **Azure Functions** app
+(`api/`) backed by **Azure Table Storage** — this replaces the dev-only `json-server`. The
+GitHub Actions workflow in `.github/workflows/` already builds and deploys both.
+
+### 1. Provision Azure resources
+
+1. **Storage account** (for Table Storage) — create one, then copy its **connection
+   string** (Access keys blade).
+2. **Static Web App** — create one pointed at this GitHub repo, branch `main`, with build
+   settings: app location `/`, api location `api`, output location `build`. Azure adds the
+   deployment-token secret to the repo automatically.
+3. In the Static Web App → **Configuration** (application settings), add
+   `TABLES_CONNECTION_STRING` = the storage connection string from step 1.
+4. **Seed the admin user** once: from `api/`,
+   `TABLES_CONNECTION_STRING="<conn string>" npm run seed`.
+
+### 2. Make Plex reachable (required, or no movies will load)
+
+The browser streams **directly** from your Plex server, so a deployed HTTPS app needs:
+
+- **Plex Remote Access enabled** so the server is reachable from the internet
+  (Plex → Settings → Remote Access).
+- An **HTTPS** Plex URL. A plain `http://<ip>:<port>` URL is blocked by the browser as
+  *mixed content* on an HTTPS site. Use your server's secure `*.plex.direct` address (Plex
+  issues these certs) — e.g. `https://<dash-encoded-ip>.<hash>.plex.direct:32400`.
+- Plex **CORS** permitting your Static Web App origin.
+
+Put the HTTPS Plex URL, token, and library ID in `Settings.js` (it is bundled into the
+build). **Note:** the X-Plex-Token ends up in the public client bundle, so only deploy a
+collection/token you're comfortable exposing.
+
+### 3. Deploy
+
+Push to `main`. The workflow builds the app + API and deploys. `dbURL` automatically points
+at `/api` in the production build (see `Settings-template.js`), so no code change is needed
+between local and cloud.
+
 ## Help
 
 If you need assistance with any of the above, reach me on Github or Twitter, @ActuallyAJL and I will send resources that will help.
