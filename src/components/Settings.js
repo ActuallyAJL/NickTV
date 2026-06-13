@@ -1,4 +1,4 @@
-// Remote-Watch configuration — committed and SECRET-FREE.
+// NickTV configuration — committed and SECRET-FREE.
 //
 // Real values come from environment variables so no Plex token ever lands in git:
 //   - Local dev: put them in a gitignored `.env.local` (see `.env.local.example`).
@@ -25,3 +25,21 @@ export const dbURL =
   process.env.NODE_ENV === "production"
     ? "/api"
     : process.env.REACT_APP_DB_URL || "http://localhost:8088";
+
+// Discord OAuth2 (Phase 1 auth). The Client ID is PUBLIC and safe to ship in the client
+// bundle; the Client *secret* never lives here — it stays in the Functions app settings
+// (DISCORD_CLIENT_SECRET) for the server-side code exchange. Register the app at
+// https://discord.com/developers/applications and add the redirect URI below to its
+// OAuth2 → Redirects list. Until REACT_APP_DISCORD_CLIENT_ID is set the login button
+// renders but can't complete the handshake.
+export const discordClientId = process.env.REACT_APP_DISCORD_CLIENT_ID || "";
+
+// Where Discord sends the user back after they authorize. Defaults to this app's own
+// origin + /auth/callback so it works in dev and prod without extra config; override with
+// REACT_APP_DISCORD_REDIRECT_URI if you need a fixed value. Must match a redirect URI
+// registered on the Discord application exactly.
+export const discordRedirectUri =
+  process.env.REACT_APP_DISCORD_REDIRECT_URI ||
+  (typeof window !== "undefined"
+    ? `${window.location.origin}/auth/callback`
+    : "");

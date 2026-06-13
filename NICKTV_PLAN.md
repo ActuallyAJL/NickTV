@@ -111,32 +111,32 @@ Phased so each phase leaves a working app.
 6. Build the **Discord-side admin controls** (bot command / role) to add/remove the ~20
    users.
 
-**Phase 2 — Temporary résumé-link access**
-7. Design the grant token: link-hit mints a signed, 12-h token + a per-grant record; gate the
-   app on a valid, unexpired grant; ensure expiry locks the old visitor out while a new
-   visitor on the same link gets a fresh grant.
-
-**Phase 3 — Realtime backbone**
-8. Stand up the always-on realtime layer (Web PubSub / SignalR / WS server on App Service or
+**Phase 2 — Realtime backbone**
+7. Stand up the always-on realtime layer (Web PubSub / SignalR / WS server on App Service or
    Container Apps). Prove a basic broadcast + presence round-trip.
 
-**Phase 4 — NickTV Live (the headline)**
-9. Define the **schedule** data model + admin tooling to program it.
-10. Implement the **server clock**: "current item + offset" derived from schedule + now.
-11. Build the **synced player**: join-at-live-position, drift correction, resync.
-12. Make **Live the home page**; demote the existing browse/watch flow to a secondary route.
+**Phase 3 — NickTV Live (the headline)**
+8. Define the **schedule** data model + admin tooling to program it.
+9. Implement the **server clock**: "current item + offset" derived from schedule + now.
+10. Build the **synced player**: join-at-live-position, drift correction, resync.
+11. Make **Live the home page**; demote the existing browse/watch flow to a secondary route.
 
-**Phase 5 — Persistent chat**
-13. Immutable chat store; render Discord username; **content-anchored timestamps** (title +
+**Phase 4 — Persistent chat**
+12. Immutable chat store; render Discord username; **content-anchored timestamps** (title +
     position captured from the live clock at post time); persistence + history load.
 
-**Phase 6 — Discord-channel viewing**
-14. Surface Live inside a Discord channel (evaluate Discord Embedded App SDK / Activities vs.
+**Phase 5 — Discord-channel viewing**
+13. Surface Live inside a Discord channel (evaluate Discord Embedded App SDK / Activities vs.
     a linked web view) and wire chat/identity through.
 
-**Phase 7 — Azure 24/7 hardening**
-15. Move off request/response-only hosting to keep the channel and realtime layer always on;
+**Phase 6 — Azure 24/7 hardening**
+14. Move off request/response-only hosting to keep the channel and realtime layer always on;
     configuration, secrets, monitoring, cost check.
+
+**Phase 7 — Temporary résumé-link access (deferred — lower priority for now)**
+15. Design the grant token: link-hit mints a signed, 12-h token + a per-grant record; gate the
+    app on a valid, unexpired grant; ensure expiry locks the old visitor out while a new
+    visitor on the same link gets a fresh grant.
 
 ## Open design questions
 
