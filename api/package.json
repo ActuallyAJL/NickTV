@@ -1,7 +1,7 @@
 {
-  "name": "remote-watch-api",
+  "name": "nicktv-api",
   "version": "1.0.0",
-  "description": "Azure Functions API for Remote-Watch (users, favorites, reviews) backed by Azure Table Storage. Replaces the dev-only json-server.",
+  "description": "Azure Functions API for NickTV (users, favorites, reviews) backed by Azure Table Storage. Replaces the dev-only json-server.",
   "private": true,
   "main": "src/functions/*.js",
   "scripts": {

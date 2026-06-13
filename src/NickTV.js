@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ApplicationViews } from "./components/ApplicationViews";
-import "./RemoteWatch.css";
+import "./NickTV.css";
 
-export const RemoteWatch = () => {
+export const NickTV = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     sessionStorage.getItem("rm_user") !== null
   );
