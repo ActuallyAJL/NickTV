@@ -1,8 +1,8 @@
-# Remote-Watch
+# NickTV
 
-Remote-Watch provides an alternative web-based interface for viewing movies that are part of a Plex Media Server collection.
+NickTV provides an alternative web-based interface for viewing movies that are part of a Plex Media Server collection.
 
-![Remote-Watch Homepage](/public/images/Homepage.png "Remote Watch Homepage")
+![NickTV Homepage](/public/images/Homepage.png "NickTV Homepage")
 
 ## Installation
 
@@ -27,7 +27,7 @@ Log in with `admin@rm.com`. Happy Viewing
 
 ## Deploying to Azure (Static Web App)
 
-Remote-Watch can be hosted as an **Azure Static Web App**: the React UI is served as static
+NickTV can be hosted as an **Azure Static Web App**: the React UI is served as static
 files, and the users/favorites/reviews API ships as a bundled **Azure Functions** app
 (`api/`) backed by **Azure Table Storage** — this replaces the dev-only `json-server`. The
 GitHub Actions workflow in `.github/workflows/` already builds and deploys both.
@@ -79,7 +79,7 @@ Certain parts of this project were found online as open source. As such, the ent
 ## ERD
 
 Here is my ERD for how data is handled by this app
-![Remote-Watch ERD](/public/images/ERD.png "Remote Watch ERD")
+![NickTV ERD](/public/images/ERD.png "NickTV ERD")
 
 ## User Stories
 

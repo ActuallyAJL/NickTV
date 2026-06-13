@@ -27,6 +27,13 @@ yarn-error.log*
 # json-server data (dev-only; real data lives in Azure Table Storage)
 database.json
 
+# Azurite (local Azure Storage emulator for Functions dev)
+AzuriteConfig
+__azurite_db_*.json
+__blobstorage__/
+__queuestorage__/
+.azurite/
+
 # Local secrets for `npm start` (Plex token etc.). Settings.js is now committed and
 # secret-free — it reads these from the environment. .env.local is already ignored above.
 CLAUDE.md
