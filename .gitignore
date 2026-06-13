@@ -29,3 +29,4 @@ database.json
 
 # Local secrets for `npm start` (Plex token etc.). Settings.js is now committed and
 # secret-free — it reads these from the environment. .env.local is already ignored above.
+CLAUDE.md
