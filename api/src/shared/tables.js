@@ -1,4 +1,4 @@
-// Shared Azure Table Storage helpers for the Remote-Watch API.
+// Shared Azure Table Storage helpers for the NickTV API.
 //
 // Design notes:
 // - One table per resource (users / favorites / reviews), single partition each.

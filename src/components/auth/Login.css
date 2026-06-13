@@ -1,0 +1,71 @@
+/* NickTV login screen. The VHS-static background comes from .auth_body (NickTV.css);
+   we add a dark-grey fallback under it so the randomized title color stays readable
+   even before the gif paints. */
+
+.nicktv-login {
+  background-color: #1c1c1e;
+}
+
+.nicktv-login__inner {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* push the wordmark into the vertical top third */
+  padding-top: 20vh;
+  gap: 2.5rem;
+}
+
+.nicktv-login__title {
+  margin: 0;
+  text-align: center;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  /* dark halo keeps any random hue legible over the busy static */
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.9);
+  user-select: none;
+}
+
+.nicktv-login__discord {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #5865f2; /* Discord blurple */
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.nicktv-login__discord:hover {
+  background-color: #4752c4;
+}
+
+.nicktv-login__discord:active {
+  transform: translateY(1px);
+}
+
+.nicktv-login__discord svg {
+  width: 24px;
+  height: 24px;
+}
+
+.nicktv-login__hint {
+  max-width: 24rem;
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #ffd2d2;
+}
+
+.nicktv-login__hint code {
+  font-family: monospace;
+}
