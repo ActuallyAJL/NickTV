@@ -18,13 +18,22 @@ export const key = process.env.REACT_APP_PLEX_TOKEN || "";
 // The Movie library section id on your Plex server.
 export const movieLibId = process.env.REACT_APP_MOVIE_LIB_ID || 1;
 
+// Base URL of the standalone Azure Functions app (func-nickTvApi-prod) that serves the whole
+// /api surface — auth, users, favorites, reviews. Set REACT_APP_API_BASE at build time to its
+// URL, e.g. https://func-nicktvapi-prod.azurewebsites.net/api. When set it drives BOTH the data
+// API and the Discord auth call below. Left empty it falls back to same-origin "/api" (the old
+// SWA-managed-API model) in prod and json-server in dev — so local workflows are unchanged.
+const apiBase = process.env.REACT_APP_API_BASE || "";
+
 // Where the users/reviews/favorites data API lives.
-//   - Production build: the bundled Azure Functions API, same origin under "/api".
-//   - Local dev: json-server (override the default port with REACT_APP_DB_URL if needed).
+//   - apiBase set: the standalone Function App.
+//   - else, production build: same-origin "/api".
+//   - else, local dev: json-server (override the port with REACT_APP_DB_URL if needed).
 export const dbURL =
-  process.env.NODE_ENV === "production"
+  apiBase ||
+  (process.env.NODE_ENV === "production"
     ? "/api"
-    : process.env.REACT_APP_DB_URL || "http://localhost:8088";
+    : process.env.REACT_APP_DB_URL || "http://localhost:8088");
 
 // Discord OAuth2 (Phase 1 auth). The Client ID is PUBLIC and safe to ship in the client
 // bundle; the Client *secret* never lives here — it stays in the Functions app settings
@@ -44,7 +53,8 @@ export const discordRedirectUri =
     ? `${window.location.origin}/auth/callback`
     : "");
 
-// Base path of the Azure Functions app that does the Discord code→token exchange.
-// In production the SWA managed API is same-origin under "/api". For local dev against a
-// standalone `func start` (port 7071), set REACT_APP_AUTH_API_BASE=http://localhost:7071/api.
-export const authApiBase = process.env.REACT_APP_AUTH_API_BASE || "/api";
+// Base path for the Discord code→token exchange. Follows the same Function App as the data
+// API (apiBase). For local dev against a standalone `func start` (port 7071), set either
+// REACT_APP_API_BASE or REACT_APP_AUTH_API_BASE to http://localhost:7071/api.
+export const authApiBase =
+  apiBase || process.env.REACT_APP_AUTH_API_BASE || "/api";
