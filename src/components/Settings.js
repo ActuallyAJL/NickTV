@@ -43,3 +43,8 @@ export const discordRedirectUri =
   (typeof window !== "undefined"
     ? `${window.location.origin}/auth/callback`
     : "");
+
+// Base path of the Azure Functions app that does the Discord code→token exchange.
+// In production the SWA managed API is same-origin under "/api". For local dev against a
+// standalone `func start` (port 7071), set REACT_APP_AUTH_API_BASE=http://localhost:7071/api.
+export const authApiBase = process.env.REACT_APP_AUTH_API_BASE || "/api";
