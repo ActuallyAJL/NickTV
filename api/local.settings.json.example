@@ -3,7 +3,9 @@
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "TABLES_CONNECTION_STRING": "UseDevelopmentStorage=true"
+    "TABLES_CONNECTION_STRING": "UseDevelopmentStorage=true",
+    "DISCORD_CLIENT_ID": "your-discord-application-client-id",
+    "DISCORD_CLIENT_SECRET": "your-discord-application-client-secret"
   },
   "Host": {
     "CORS": "http://localhost:3000",
