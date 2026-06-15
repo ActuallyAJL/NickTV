@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { Login } from "./auth/Login";
+import { AuthCallback } from "./auth/AuthCallback";
 import { Register } from "./auth/Register";
 import { MovieList } from "./movies/MovieList";
 import { MovieDetails } from "./movies/MovieDetails";
@@ -52,6 +53,10 @@ export const ApplicationViews = ({
         </Route>
 
         <Route path="/login" element={<Login setAuthUser={setAuthUser} />} />
+        <Route
+          path="/auth/callback"
+          element={<AuthCallback setAuthUser={setAuthUser} />}
+        />
         <Route
           path="/register"
           element={<Register setAuthUser={setAuthUser} />}
