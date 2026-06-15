@@ -22,6 +22,18 @@ jobs:
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          # CRA bakes REACT_APP_* into the static bundle AT BUILD TIME, so they must be
+          # set here (Azure SWA "Configuration" app settings only reach the Functions
+          # runtime, not the static build). Add each as a GitHub repo secret.
+          REACT_APP_DISCORD_CLIENT_ID: ${{ secrets.REACT_APP_DISCORD_CLIENT_ID }}
+          # Base URL of the standalone Function App (func-nickTvApi-prod), e.g.
+          # https://func-nicktvapi-prod.azurewebsites.net/api — drives the whole /api surface.
+          REACT_APP_API_BASE: ${{ secrets.REACT_APP_API_BASE }}
+          # Plex (optional, for the on-demand library — same build-time pattern):
+          # REACT_APP_PLEX_URL: ${{ secrets.REACT_APP_PLEX_URL }}
+          # REACT_APP_PLEX_TOKEN: ${{ secrets.REACT_APP_PLEX_TOKEN }}
+          # REACT_APP_MOVIE_LIB_ID: ${{ secrets.REACT_APP_MOVIE_LIB_ID }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_SEA_025CD1D0F }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
@@ -29,7 +41,9 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/" # App source code path
-          api_location: "api" # Azure Functions API (users/favorites/reviews)
+          # API is deployed separately to the standalone func-nickTvApi-prod (see
+          # deploy-functions.yml); empty so the SWA no longer builds a managed API.
+          api_location: ""
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
